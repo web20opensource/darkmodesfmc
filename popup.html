@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 268px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      background: #17151c;
+      color: #D4D4D4;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1f1b2e 0%, #19171d 100%);
+      padding: 13px 16px;
+      border-bottom: 1px solid #2a2836;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .header .icon { font-size: 20px; }
+    .header-text h1 { font-size: 13px; font-weight: 700; color: #FFF; letter-spacing: -.01em; }
+    .header-text p  { font-size: 10px; color: #858585; margin-top: 2px; }
+
+    .section { padding: 11px 14px 0; }
+    .section-label {
+      font-size: 9px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: #424242; margin-bottom: 8px;
+    }
+
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 7px; padding: 8px 11px;
+      border-radius: 6px; background: #1f1d27; border: 1px solid #2a2836;
+      transition: opacity 0.2s;
+    }
+    .toggle-row.disabled { opacity: 0.38; pointer-events: none; }
+
+    .toggle-info { flex: 1; margin-right: 12px; }
+    .toggle-label { font-size: 12px; font-weight: 600; color: #D4D4D4; display: block; line-height: 1.2; }
+    .toggle-desc  { font-size: 10px; color: #525260; margin-top: 2px; line-height: 1.3; }
+    .sched-badge  {
+      font-size: 9px; color: #ae8fd4; font-weight: 600;
+      background: rgba(174,143,212,0.12); border-radius: 3px;
+      padding: 1px 5px; margin-left: 5px; vertical-align: middle;
+    }
+
+    .switch { position: relative; width: 38px; height: 21px; flex-shrink: 0; }
+    .switch input { display: none; }
+    .slider {
+      position: absolute; inset: 0; background: #2e2a36;
+      border-radius: 21px; cursor: pointer;
+      transition: .22s cubic-bezier(.4,0,.2,1);
+    }
+    .slider:before {
+      content: ''; position: absolute;
+      width: 15px; height: 15px; left: 3px; top: 3px;
+      background: #424242; border-radius: 50%;
+      transition: .22s cubic-bezier(.4,0,.2,1);
+    }
+    .toggle-dark   input:checked + .slider { background: #3d3846; }
+    .toggle-dark   input:checked + .slider:before { transform: translateX(17px); background: #ae8fd4; }
+    .toggle-read   input:checked + .slider { background: #1a3535; }
+    .toggle-read   input:checked + .slider:before { transform: translateX(17px); background: #4ecdc4; }
+    .toggle-editor input:checked + .slider { background: #1a2840; }
+    .toggle-editor input:checked + .slider:before { transform: translateX(17px); background: #569CD6; }
+
+    .divider { margin: 10px 14px; border: none; border-top: 1px solid #1f1d27; }
+
+    /* Mode pills */
+    .schedule-modes { display: flex; gap: 5px; margin-bottom: 8px; }
+    .mode-btn {
+      flex: 1; padding: 5px 0;
+      background: #1f1d27; border: 1px solid #2a2836;
+      border-radius: 5px; color: #525260;
+      font-size: 11px; font-weight: 600; cursor: pointer;
+      transition: all .15s; font-family: inherit;
+    }
+    .mode-btn:hover { color: #D4D4D4; border-color: #3d3a4a; }
+    .mode-btn.active { background: #2a2640; border-color: #ae8fd4; color: #ae8fd4; }
+
+    /* System info */
+    .system-info {
+      background: #1f1d27; border: 1px solid #2a2836; border-radius: 6px;
+      padding: 9px 12px; display: none; align-items: center; gap: 8px;
+      font-size: 11px; color: #858585;
+    }
+    .system-info.visible { display: flex; }
+    .system-info strong { color: #D4D4D4; }
+
+    /* Custom panel */
+    .custom-panel {
+      background: #1f1d27; border: 1px solid #2a2836; border-radius: 6px;
+      padding: 10px 12px; display: none; flex-direction: column; gap: 8px;
+    }
+    .custom-panel.visible { display: flex; }
+
+    .time-row { display: flex; align-items: flex-end; gap: 6px; }
+    .time-field { flex: 1; }
+    .time-field label {
+      display: block; font-size: 9px; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: #525260; margin-bottom: 4px;
+    }
+    .time-field input[type="time"] {
+      width: 100%; background: #252530; border: 1px solid #3a3848;
+      border-radius: 4px; color: #D4D4D4; font-size: 13px;
+      font-weight: 600; padding: 5px 7px; font-family: inherit; cursor: pointer;
+    }
+    .time-field input[type="time"]:focus {
+      outline: none; border-color: #ae8fd4;
+      box-shadow: 0 0 0 2px rgba(174,143,212,.15);
+    }
+    .time-arrow { color: #424242; font-size: 16px; padding-bottom: 5px; flex-shrink: 0; }
+
+    .schedule-info {
+      font-size: 10px; line-height: 1.4; padding: 6px 9px;
+      background: #17151c; border-radius: 4px; color: #858585;
+      display: flex; align-items: flex-start; gap: 6px;
+    }
+    .schedule-info .ico { flex-shrink: 0; font-size: 12px; }
+    .s-dark  { color: #ae8fd4; font-weight: 600; }
+    .s-light { color: #4ecdc4; font-weight: 600; }
+
+    /* Status bar */
+    .status-bar {
+      padding: 8px 14px 9px; border-top: 1px solid #1f1d27;
+      display: flex; align-items: center; gap: 5px; margin-top: 10px;
+    }
+    .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: #2a2836; flex-shrink: 0;
+      transition: background .3s, box-shadow .3s;
+    }
+    .dot.d-on { background: #ae8fd4; box-shadow: 0 0 5px #ae8fd480; }
+    .dot.r-on { background: #4ecdc4; box-shadow: 0 0 5px #4ecdc480; }
+    .dot.e-on { background: #569CD6; box-shadow: 0 0 5px #569CD680; }
+    .dot.s-on { background: #f0a050; box-shadow: 0 0 5px #f0a05080; }
+
+    .status-text { font-size: 10px; color: #525260; font-weight: 500; flex: 1; }
+    .version     { font-size: 9px; color: #2a2836; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="icon">🌙</div>
+    <div class="header-text">
+      <h1>MC Enhancer</h1>
+      <p>Salesforce Marketing Cloud</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Display</div>
+
+    <div class="toggle-row" id="row-dark">
+      <div class="toggle-info">
+        <span class="toggle-label">
+          Dark Mode
+          <span class="sched-badge" id="sched-badge" style="display:none">auto</span>
+        </span>
+        <span class="toggle-desc">Low-light palette, reduced glare</span>
+      </div>
+      <label class="switch toggle-dark">
+        <input type="checkbox" id="toggle-dark">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-info">
+        <span class="toggle-label">Readability</span>
+        <span class="toggle-desc">Typography, spacing &amp; contrast</span>
+      </div>
+      <label class="switch toggle-read">
+        <input type="checkbox" id="toggle-read">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <div class="toggle-info">
+        <span class="toggle-label">Code Editor</span>
+        <span class="toggle-desc">DevTools syntax highlighting</span>
+      </div>
+      <label class="switch toggle-editor">
+        <input type="checkbox" id="toggle-editor">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section" style="padding-bottom:12px">
+    <div class="section-label">Dark Mode Schedule</div>
+
+    <div class="schedule-modes">
+      <button class="mode-btn" id="mode-manual">Manual</button>
+      <button class="mode-btn" id="mode-system">System</button>
+      <button class="mode-btn" id="mode-custom">Custom</button>
+    </div>
+
+    <div class="system-info" id="system-info">
+      <span>💻</span>
+      <span>Follows your <strong>OS dark/light</strong> preference automatically</span>
+    </div>
+
+    <div class="custom-panel" id="custom-panel">
+      <div class="time-row">
+        <div class="time-field">
+          <label>🌙 Dark from</label>
+          <input type="time" id="time-start" value="22:00">
+        </div>
+        <span class="time-arrow">→</span>
+        <div class="time-field">
+          <label>☀️ Light from</label>
+          <input type="time" id="time-end" value="07:00">
+        </div>
+      </div>
+      <div class="schedule-info">
+        <span class="ico" id="sched-ico">⏱</span>
+        <span id="sched-text">Calculating…</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <div class="dot" id="dot-d"></div>
+    <div class="dot" id="dot-r"></div>
+    <div class="dot" id="dot-e"></div>
+    <div class="dot" id="dot-s"></div>
+    <div class="status-text" id="status-text">Loading…</div>
+    <div class="version">v3.0</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
