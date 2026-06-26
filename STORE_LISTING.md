@@ -1,10 +1,10 @@
 # Chrome Web Store — Listing Copy
-# MC Enhancer: Dark Mode + Readability for SFMC
+# Unofficial: Dark Mode + Readability for SFMC
 # ─────────────────────────────────────────────────────────────
 
 
 ## NAME  (45 chars max)
-MC Enhancer: Dark Mode for SFMC
+Unofficial: Dark Mode for SFMC
 
 
 ## SHORT DESCRIPTION  (132 chars max)
@@ -17,7 +17,7 @@ Dark mode, readable typography, and syntax highlighting for Salesforce Marketing
 
 If you spend hours every day inside Salesforce Marketing Cloud, you know the problem: a bright white interface, low-contrast text in the navigation, and a code editor that renders strings in near-black on dark grey. Your eyes pay for it by mid-afternoon.
 
-MC Enhancer fixes that with three independent layers you can switch on or off individually:
+Unofficial  Dark Mode + Readability for SFMC fixes that with three independent layers you can switch on or off individually:
 
 
 🌙 DARK MODE
@@ -107,11 +107,11 @@ journey builder, exacttarget, sfmc dark theme, readability, developer tools
 
 ---
 
-MC Enhancer Privacy Policy
+Unofficial Privacy Policy
 
 Last updated: [DATE]
 
-MC Enhancer is a Chrome browser extension that modifies the visual appearance of Salesforce Marketing Cloud web pages.
+Unofficial is a Chrome browser extension that modifies the visual appearance of Salesforce Marketing Cloud web pages.
 
 DATA COLLECTED
 This extension does not collect, transmit, or share any personal data. The only data stored is your extension preferences (which toggles are on/off, your schedule settings) and this data is stored locally in Chrome's sync storage — it never leaves your browser.
@@ -157,5 +157,5 @@ Screenshot 5 — Before / after comparison (optional)
 
 ## PROMOTIONAL TILE  (440×280 — optional but recommended)
 Dark background (#1e1e1e), extension icon centred, tagline below:
-"MC Enhancer · Dark mode for SFMC"
+"Unofficial · Dark mode for SFMC"
 Use the purple accent (#7C7CE8) for the tagline.

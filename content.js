@@ -882,7 +882,7 @@ const EDITOR_CSS = `
     color: #D4D4D4 !important;
   }
   .mc-app-switcher-container{
-    background-color: #000000;
+    background-color: #000000 !important;
   }
 `;
 
