@@ -1,4 +1,4 @@
-# MC Enhancer — Dark Mode + Readability for SFMC
+# Unofficial — Dark Mode + Readability for SFMC
 
 > A Chrome extension that makes Salesforce Marketing Cloud easier to work in — dark mode, readable typography, proper syntax highlighting, and a smart schedule so it switches automatically.
 
@@ -8,7 +8,7 @@
 
 SFMC's default UI is bright white, uses low-contrast text throughout, and the built-in code editor renders strings in a dark red (`#a11`) that's nearly invisible at night. If you spend long hours in Content Builder or Email Studio, your eyes pay for it.
 
-MC Enhancer fixes that with three independent layers you can toggle separately:
+Unofficial Dark Mode + Readability for SFMC fixes that with three independent layers you can toggle separately:
 
 | Layer | What it does |
 |---|---|
