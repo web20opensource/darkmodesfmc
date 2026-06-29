@@ -35,7 +35,7 @@ Unofficial Dark Mode + Readability for SFMC fixes that with three independent la
 ## Installation
 
 ### From the Chrome Web Store
-*Coming soon — link will appear here once published.*
+[*Link*](https://chromewebstore.google.com/detail/ejmijbliddlfblbmadflmiipakplibin?utm_source=item-share-cb)
 
 ### Manual (developer mode)
 1. Download the latest `.zip` from [Releases](../../releases)
